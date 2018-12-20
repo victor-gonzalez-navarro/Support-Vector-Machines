@@ -4,7 +4,6 @@
 
 
 import numpy as np
-import cvxopt
 import cvxopt.solvers
 from sklearn.svm import SVC
 import matplotlib.pyplot as plt
@@ -69,15 +68,35 @@ if __name__ == "__main__":
 
     def run_svm_dataset1():
         X1, y1, X2, y2 = generate_data_set1()
+        plt.plot(X1[:, 0], X1[:, 1], c='r', linestyle='None', marker='.')
+        plt.plot(X2[:, 0], X2[:, 1], c='b', linestyle='None', marker='.')
+        plt.xlabel('X1')
+        plt.ylabel('X2')
+        plt.title('Labeled dataset (Train + Test)')
+        plt.show()
+
         X_train, y_train = split_train(X1, y1, X2, y2)
         X_test, y_test = split_test(X1, y1, X2, y2)
+        idx1 = y_train == 1
+        idx2 = y_train == -1
+        plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
+        plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
+        plt.xlabel('X1')
+        plt.ylabel('X2')
+        plt.title('Labeled Training set')
+        plt.show()
 
-         #### 
+        ####
         # Write here your SVM code and choose a linear kernel
         svm = SVC(kernel='linear')
         svm.fit(X_train, y_train)
 
-        plt.plot(svm.support_vectors_, linestyle='None', marker='.')
+        plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
+        plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
+        plt.plot(svm.support_vectors_, c='y', linestyle='None', marker='*')
+        plt.xlabel('X1')
+        plt.ylabel('X2')
+        plt.title('Labeled Training set with support vectors')
         plt.show()
 
         scores = svm.predict(X_test)
@@ -85,22 +104,6 @@ if __name__ == "__main__":
         accuracy = sum([x == y for x, y in zip(y_test, scores)]) / len(y_test)
         print(accuracy)
 
-        idx1 = y_train == -1
-        idx2 = y_train == 1
-        plt.plot(X_train[idx1, :], y_train[idx1], c='r', linestyle='None', marker='.')
-        plt.plot(X_train[idx2, :], y_train[idx2], c='b', linestyle='None', marker='.')
-        plt.show()
-
-        idx1 = y_test == -1
-        idx2 = y_test == 1
-        plt.figure()
-        plt.plot(X_test[idx1, :], y_test[idx1], c='r', linestyle='None', marker='.')
-        plt.plot(X_test[idx2, :], y_test[idx2], c='b', linestyle='None', marker='.')
-        plt.show()
-
-        plt.figure()
-        plt.plot(svm.support_vectors_, linestyle='None', marker='.')
-        plt.show()
 
         # plot the graph with the support_vectors_
         # print on the console the number of correct predictions and the total of predictions
