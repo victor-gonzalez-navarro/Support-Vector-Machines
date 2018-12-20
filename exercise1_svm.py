@@ -74,7 +74,8 @@ if __name__ == "__main__":
         ####
 
         X1, y1, X2, y2 = generate_data_set1()
-        main_function(X1, y1, X2, y2, 'linear')
+        C = 1
+        main_function(X1, y1, X2, y2, C, 'linear', False)
 
 
     def run_svm_dataset2():
@@ -86,7 +87,10 @@ if __name__ == "__main__":
         ####
 
         X1, y1, X2, y2 = generate_data_set2()
-        main_function(X1, y1, X2, y2, 'linear')
+        for i in [0.1, 0.5, 1, 5]:
+            C = i
+            main_function(X1, y1, X2, y2, C, 'linear', False)
+            print('-------------------------------------------------')
 
 
     def run_svm_dataset3():
@@ -98,92 +102,100 @@ if __name__ == "__main__":
         ####
 
         X1, y1, X2, y2 = generate_data_set3()
-        main_function(X1, y1, X2, y2, 'rbf')
+        C = 1
+        main_function(X1, y1, X2, y2, C, 'rbf', False)
 
 
-    def main_function(X1, y1, X2, y2, kernel_function):
-        plt.plot(X1[:, 0], X1[:, 1], c='r', linestyle='None', marker='.')
-        plt.plot(X2[:, 0], X2[:, 1], c='b', linestyle='None', marker='.')
-        plt.xlabel('X1')
-        plt.ylabel('X2')
-        plt.title('Labeled dataset (Train + Test)')
-        plt.show()
+    def main_function(X1, y1, X2, y2, C, kernel_function, plot_boolean):
+        if plot_boolean:
+            plt.plot(X1[:, 0], X1[:, 1], c='r', linestyle='None', marker='.')
+            plt.plot(X2[:, 0], X2[:, 1], c='b', linestyle='None', marker='.')
+            plt.xlabel('X1')
+            plt.ylabel('X2')
+            plt.title('Labeled dataset (Train + Test)')
+            plt.show()
 
         X_train, y_train = split_train(X1, y1, X2, y2)
         X_test, y_test = split_test(X1, y1, X2, y2)
-        idx1 = y_train == 1
-        idx2 = y_train == -1
-        plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
-        plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
-        plt.xlabel('X1')
-        plt.ylabel('X2')
-        plt.title('Labeled Training set')
-        plt.show()
+
+        if plot_boolean:
+            idx1 = y_train == 1
+            idx2 = y_train == -1
+            plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
+            plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
+            plt.xlabel('X1')
+            plt.ylabel('X2')
+            plt.title('Labeled Training set')
+            plt.show()
 
         # Write here your SVM code and choose a linear kernel
-        svm = SVC(kernel=kernel_function)
+        svm = SVC(C = C, kernel=kernel_function)
         svm.fit(X_train, y_train)
 
-        # Plot the graph with the support_vectors_
-        plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
-        plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
-        plt.plot(X_train[svm.support_, 0], X_train[svm.support_, 1], c='g', linestyle='None', marker='*')
-        plt.xlabel('X1')
-        plt.ylabel('X2')
-        plt.title('Labeled Training set with support vectors')
-        plt.show()
+        if plot_boolean:
+            # Plot the graph with the support_vectors_
+            plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
+            plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
+            plt.plot(X_train[svm.support_, 0], X_train[svm.support_, 1], c='g', linestyle='None', marker='*')
+            plt.xlabel('X1')
+            plt.ylabel('X2')
+            plt.title('Labeled Training set with support vectors')
+            plt.show()
 
-        # Plot decidecision boundaries
-        xmin, xmax = X_train[:, 0].min() - 0.5, X_train[:, 0].max() + 0.5
-        ymin, ymax = X_train[:, 1].min() - 0.5, X_train[:, 1].max() + 0.5
-        x, y = np.meshgrid(np.arange(xmin, xmax, 0.01), np.arange(ymin, ymax, 0.01))
-        z = svm.predict(np.c_[x.ravel(), y.ravel()])
-        z = z.reshape(x.shape)
-        plt.contourf(x, y, z, alpha=0.2, colors=['blue', 'red'])
-        plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
-        plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
-        plt.plot(X_train[svm.support_, 0], X_train[svm.support_, 1], c='g', linestyle='None', marker='*')
-        plt.xlabel('X1')
-        plt.ylabel('X2')
-        plt.title('Labeled Training set with support vectors')
-        plt.show()
+            # Plot decidecision boundaries
+            xmin, xmax = X_train[:, 0].min() - 0.5, X_train[:, 0].max() + 0.5
+            ymin, ymax = X_train[:, 1].min() - 0.5, X_train[:, 1].max() + 0.5
+            x, y = np.meshgrid(np.arange(xmin, xmax, 0.01), np.arange(ymin, ymax, 0.01))
+            z = svm.predict(np.c_[x.ravel(), y.ravel()])
+            z = z.reshape(x.shape)
+            plt.contourf(x, y, z, alpha=0.2, colors=['blue', 'red'])
+            plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
+            plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
+            plt.plot(X_train[svm.support_, 0], X_train[svm.support_, 1], c='g', linestyle='None', marker='*')
+            plt.xlabel('X1')
+            plt.ylabel('X2')
+            plt.title('Labeled Training set with support vectors')
+            plt.show()
 
         scores = svm.predict(X_test)
-        idx1 = y_test == 1
-        idx2 = y_test == -1
-        plt.plot(X_test[idx1, 0], X_test[idx1, 1], c='r', linestyle='None', marker='.')
-        plt.plot(X_test[idx2, 0], X_test[idx2, 1], c='b', linestyle='None', marker='.')
-        plt.xlabel('X1')
-        plt.ylabel('X2')
-        plt.title('Labeled Testing set')
-        plt.show()
 
-        idx1 = scores == 1
-        idx2 = scores == -1
-        plt.plot(X_test[idx1, 0], X_test[idx1, 1], c='r', linestyle='None', marker='.')
-        plt.plot(X_test[idx2, 0], X_test[idx2, 1], c='b', linestyle='None', marker='.')
-        plt.xlabel('X1')
-        plt.ylabel('X2')
-        plt.title('Predicted Testing set')
-        plt.show()
+        if plot_boolean:
+            idx1 = y_test == 1
+            idx2 = y_test == -1
+            plt.plot(X_test[idx1, 0], X_test[idx1, 1], c='r', linestyle='None', marker='.')
+            plt.plot(X_test[idx2, 0], X_test[idx2, 1], c='b', linestyle='None', marker='.')
+            plt.xlabel('X1')
+            plt.ylabel('X2')
+            plt.title('Labeled Testing set')
+            plt.show()
+
+            idx1 = scores == 1
+            idx2 = scores == -1
+            plt.plot(X_test[idx1, 0], X_test[idx1, 1], c='r', linestyle='None', marker='.')
+            plt.plot(X_test[idx2, 0], X_test[idx2, 1], c='b', linestyle='None', marker='.')
+            plt.xlabel('X1')
+            plt.ylabel('X2')
+            plt.title('Predicted Testing set')
+            plt.show()
 
         # Print on the console the number of correct predictions and the total of predictions
         num_correct_predict = sum([x == y for x, y in zip(y_test, scores)])
         print('Number of correct predictions: ' + str(num_correct_predict))
         print('Total number of predictions: ' + str(len(y_test)))
         accuracy = num_correct_predict / len(y_test)
-        print('Accuracy: ' + str(accuracy))
+        print('Accuracy with kernel = '+ str(kernel_function)+' and C = '+ str(C)+' : ' +'\033[1m' + str(accuracy)+'\033[0m')
+
 
 #############################################################
 #############################################################
 #############################################################
 
 # EXECUTE SVM with THIS DATASETS
-    print('\033[1m'+'Results using a SVM with a linear kernel'+'\033[0m')
+    print('\033[1m'+'Daraset 1: Results using a SVM with a linear kernel'+'\033[0m')
     run_svm_dataset1()   # data distribution 1
-    print('\n\033[1m'+'Results using a SVM with a linear kernel and the best parameter of C'+'\033[0m')
+    print('\n\033[1m'+'Dataset 2: Results using a SVM with a linear kernel and the best parameter of C'+'\033[0m')
     run_svm_dataset2()   # data distribution 2
-    print('\n\033[1m'+'Results using a SVM with a gaussian kernel'+'\033[0m')
+    print('\n\033[1m'+'Dataset 3: Results using a SVM with a gaussian kernel'+'\033[0m')
     run_svm_dataset3()   # data distribution 3
 
 #############################################################
