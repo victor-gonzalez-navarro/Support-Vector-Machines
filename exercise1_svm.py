@@ -90,9 +90,25 @@ if __name__ == "__main__":
         svm = SVC(kernel='linear')
         svm.fit(X_train, y_train)
 
+        # Plot the graph with the support_vectors_
         plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
         plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
-        plt.plot(X_train[svm.support_,0], X_train[svm.support_,1], c='y', linestyle='None', marker='*')
+        plt.plot(X_train[svm.support_,0], X_train[svm.support_,1], c='g', linestyle='None', marker='*')
+        plt.xlabel('X1')
+        plt.ylabel('X2')
+        plt.title('Labeled Training set with support vectors')
+        plt.show()
+
+        # Plot decidecision boundaries
+        xmin, xmax = X_train[:, 0].min() - 1, X_train[:, 0].max() + 1
+        ymin, ymax = X_train[:, 1].min() - 1, X_train[:, 1].max() + 1
+        x, y = np.meshgrid(np.arange(xmin, xmax, 0.01),np.arange(ymin, ymax, 0.01))
+        z = svm.predict(np.c_[x.ravel(), y.ravel()])
+        z = z.reshape(x.shape)
+        plt.contourf(x, y, z, alpha=0.2, colors=['blue','red'])
+        plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
+        plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
+        plt.plot(X_train[svm.support_,0], X_train[svm.support_,1], c='g', linestyle='None', marker='*')
         plt.xlabel('X1')
         plt.ylabel('X2')
         plt.title('Labeled Training set with support vectors')
@@ -117,8 +133,7 @@ if __name__ == "__main__":
         plt.title('Predicted Testing set')
         plt.show()
 
-        # plot the graph with the support_vectors_
-        # print on the console the number of correct predictions and the total of predictions
+        # Print on the console the number of correct predictions and the total of predictions
         num_correct_predict = sum([x == y for x, y in zip(y_test, scores)])
         print('Number of correct predictions: '+str(num_correct_predict))
         print('Total number of predictions: '+str(len(y_test)))
