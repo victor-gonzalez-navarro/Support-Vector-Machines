@@ -36,6 +36,22 @@ if __name__ == "__main__":
         y2 = np.ones(len(X2)) * -1
         return X1, y1, X2, y2
 
+    def generate_data_set2_victor():
+        mean1 = [-1, 2]
+        mean2 = [1, -1]
+        mean3 = [4, -4]
+        mean4 = [-4, 4]
+        cov = [[1.0,0.8], [0.8, 1.0]]
+        X1 = np.random.multivariate_normal(mean1, cov, 50)
+        X1 = np.vstack((X1, np.random.multivariate_normal(mean3, cov, 50)))
+        np.random.shuffle(X1)
+        y1 = np.ones(len(X1))
+        X2 = np.random.multivariate_normal(mean2, cov, 50)
+        X2 = np.vstack((X2, np.random.multivariate_normal(mean4, cov, 50)))
+        np.random.shuffle(X2)
+        y2 = np.ones(len(X2)) * -1
+        return X1, y1, X2, y2
+
     def generate_data_set3():
         # generate training data in the 2-d case
         mean1 = np.array([0, 2])
@@ -87,6 +103,21 @@ if __name__ == "__main__":
         ####
 
         X1, y1, X2, y2 = generate_data_set2()
+        for i in [0.1, 0.5, 1, 5]:
+            C = i
+            main_function(X1, y1, X2, y2, C, 'linear', False)
+            print('-------------------------------------------------')
+
+
+    def run_svm_dataset2_victor():
+
+        ####
+        # Write here your SVM code and choose a linear kernel with the best C parameter
+        # plot the graph with the support_vectors_
+        # print on the console the number of correct predictions and the total of predictions
+        ####
+
+        X1, y1, X2, y2 = generate_data_set2_victor()
         for i in [0.1, 0.5, 1, 5]:
             C = i
             main_function(X1, y1, X2, y2, C, 'linear', False)
@@ -195,6 +226,8 @@ if __name__ == "__main__":
     run_svm_dataset1()   # data distribution 1
     print('\n\033[1m'+'Dataset 2: Results using a SVM with a linear kernel and the best parameter of C'+'\033[0m')
     run_svm_dataset2()   # data distribution 2
+    print('\n\033[1m'+'Modified dataset 2: Results using a SVM with a linear kernel and the best parameter of C'+'\033['                                                                                          '0m')
+    run_svm_dataset2_victor()   # data distribution 2 (modified)
     print('\n\033[1m'+'Dataset 3: Results using a SVM with a gaussian kernel'+'\033[0m')
     run_svm_dataset3()   # data distribution 3
 
