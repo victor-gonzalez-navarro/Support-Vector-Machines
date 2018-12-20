@@ -86,28 +86,44 @@ if __name__ == "__main__":
         plt.title('Labeled Training set')
         plt.show()
 
-        ####
         # Write here your SVM code and choose a linear kernel
         svm = SVC(kernel='linear')
         svm.fit(X_train, y_train)
 
         plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
         plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
-        plt.plot(svm.support_vectors_, c='y', linestyle='None', marker='*')
+        plt.plot(X_train[svm.support_,0], X_train[svm.support_,1], c='y', linestyle='None', marker='*')
         plt.xlabel('X1')
         plt.ylabel('X2')
         plt.title('Labeled Training set with support vectors')
         plt.show()
 
         scores = svm.predict(X_test)
+        idx1 = y_test == 1
+        idx2 = y_test == -1
+        plt.plot(X_test[idx1, 0], X_test[idx1, 1], c='r', linestyle='None', marker='.')
+        plt.plot(X_test[idx2, 0], X_test[idx2, 1], c='b', linestyle='None', marker='.')
+        plt.xlabel('X1')
+        plt.ylabel('X2')
+        plt.title('Labeled Testing set')
+        plt.show()
 
-        accuracy = sum([x == y for x, y in zip(y_test, scores)]) / len(y_test)
-        print(accuracy)
-
+        idx1 = scores == 1
+        idx2 = scores == -1
+        plt.plot(X_test[idx1, 0], X_test[idx1, 1], c='r', linestyle='None', marker='.')
+        plt.plot(X_test[idx2, 0], X_test[idx2, 1], c='b', linestyle='None', marker='.')
+        plt.xlabel('X1')
+        plt.ylabel('X2')
+        plt.title('Predicted Testing set')
+        plt.show()
 
         # plot the graph with the support_vectors_
         # print on the console the number of correct predictions and the total of predictions
-        ####
+        num_correct_predict = sum([x == y for x, y in zip(y_test, scores)])
+        print('Number of correct predictions: '+str(num_correct_predict))
+        print('Total number of predictions: '+str(len(y_test)))
+        accuracy = num_correct_predict/len(y_test)
+        print('Accuracy: '+str(accuracy))
 
 
     def run_svm_dataset2():
