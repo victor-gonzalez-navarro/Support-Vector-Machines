@@ -118,7 +118,7 @@ if __name__ == "__main__":
         ####
 
         X1, y1, X2, y2 = generate_data_set2_victor()
-        for i in [0.1, 0.5, 1, 5]:
+        for i in [0.1, 1, 10, 500]:
             C = i
             main_function(X1, y1, X2, y2, C, 'linear', False)
             print('-------------------------------------------------')
