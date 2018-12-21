@@ -6,7 +6,7 @@ def read_keyboard():
     print('\n' + '\033[1m' + 'Which C value do you want to use?' + '\033[0m')
     C = float(input('Insert a number between (C = 1 is a good value): '))
     print('\n' + '\033[1m' + 'Which kernel function do you want to use?' + '\033[0m' + '\n1: Linear\n2: Radial Basis '
-                                'Function\n3: Plynomial\n4: Custom kernel')
+                                'Function\n3: Plynomial\n4: Custom kernel\n4: Sigmoid')
     dist = int(input('Insert a number between 1-4: '))
     if dist == 1:
         kernel = 'linear'
@@ -16,6 +16,8 @@ def read_keyboard():
         kernel = 'poly'
     elif dist == 4:
         kernel = 'my_knl'
+    elif dist == 5:
+        kernel = 'sigmoid'
 
     print('\n' + '\033[1m' + 'Which decision function do you want to use?' + '\033[0m' + '\n1: One-vs-rest\n2: '
                                                                                                'One-vs-one ')
