@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
         X1, y1, X2, y2 = generate_data_set1()
         C = 1
-        main_function(X1, y1, X2, y2, C, 'linear', False)
+        main_function(X1, y1, X2, y2, C, 'linear', True)
 
 
     def run_svm_dataset2():
@@ -134,22 +134,25 @@ if __name__ == "__main__":
 
         X1, y1, X2, y2 = generate_data_set3()
         C = 1
-        main_function(X1, y1, X2, y2, C, 'rbf', False)
+        main_function(X1, y1, X2, y2, C, 'rbf', True)
 
 
     def main_function(X1, y1, X2, y2, C, kernel_function, plot_boolean):
         if plot_boolean:
+            plt.figure(1)
+            plt.subplot(231)
             plt.plot(X1[:, 0], X1[:, 1], c='r', linestyle='None', marker='.')
             plt.plot(X2[:, 0], X2[:, 1], c='b', linestyle='None', marker='.')
             plt.xlabel('X1')
             plt.ylabel('X2')
             plt.title('Labeled dataset (Train + Test)')
-            plt.show()
+            # plt.show()
 
         X_train, y_train = split_train(X1, y1, X2, y2)
         X_test, y_test = split_test(X1, y1, X2, y2)
 
         if plot_boolean:
+            plt.subplot(232)
             idx1 = y_train == 1
             idx2 = y_train == -1
             plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
@@ -157,7 +160,7 @@ if __name__ == "__main__":
             plt.xlabel('X1')
             plt.ylabel('X2')
             plt.title('Labeled Training set')
-            plt.show()
+            #plt.show()
 
         # Write here your SVM code and choose a linear kernel
         svm = SVC(C = C, kernel=kernel_function)
@@ -165,15 +168,17 @@ if __name__ == "__main__":
 
         if plot_boolean:
             # Plot the graph with the support_vectors_
+            plt.subplot(233)
             plt.plot(X_train[idx1, 0], X_train[idx1, 1], c='r', linestyle='None', marker='.')
             plt.plot(X_train[idx2, 0], X_train[idx2, 1], c='b', linestyle='None', marker='.')
             plt.plot(X_train[svm.support_, 0], X_train[svm.support_, 1], c='g', linestyle='None', marker='*')
             plt.xlabel('X1')
             plt.ylabel('X2')
             plt.title('Labeled Training set with support vectors')
-            plt.show()
+            #plt.show()
 
             # Plot decidecision boundaries
+            plt.subplot(234)
             xmin, xmax = X_train[:, 0].min() - 0.5, X_train[:, 0].max() + 0.5
             ymin, ymax = X_train[:, 1].min() - 0.5, X_train[:, 1].max() + 0.5
             x, y = np.meshgrid(np.arange(xmin, xmax, 0.01), np.arange(ymin, ymax, 0.01))
@@ -186,27 +191,32 @@ if __name__ == "__main__":
             plt.xlabel('X1')
             plt.ylabel('X2')
             plt.title('Labeled Training set with support vectors')
-            plt.show()
+            #plt.show()
 
         scores = svm.predict(X_test)
 
         if plot_boolean:
+            plt.subplot(235)
             idx1 = y_test == 1
             idx2 = y_test == -1
             plt.plot(X_test[idx1, 0], X_test[idx1, 1], c='r', linestyle='None', marker='.')
             plt.plot(X_test[idx2, 0], X_test[idx2, 1], c='b', linestyle='None', marker='.')
             plt.xlabel('X1')
             plt.ylabel('X2')
-            plt.title('Labeled Testing set')
-            plt.show()
+            plt.title('Testing set with target labels')
+            #plt.show()
 
+            plt.subplot(236)
             idx1 = scores == 1
             idx2 = scores == -1
             plt.plot(X_test[idx1, 0], X_test[idx1, 1], c='r', linestyle='None', marker='.')
             plt.plot(X_test[idx2, 0], X_test[idx2, 1], c='b', linestyle='None', marker='.')
             plt.xlabel('X1')
             plt.ylabel('X2')
-            plt.title('Predicted Testing set')
+            plt.title('Testing set with predicted labels')
+
+            plt.subplots_adjust(top=0.92, bottom=0.08, left=0.10, right=0.95, hspace=0.25,
+                                wspace=0.35)
             plt.show()
 
         # Print on the console the number of correct predictions and the total of predictions
