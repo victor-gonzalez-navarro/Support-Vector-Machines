@@ -15,10 +15,7 @@ class SVM_Algorithm():
         self.kernel_fcn = kernel
 
     def algorithm(self, trn_data, trn_labels, tst_data, tst_labels):
-        acc = 0; C = 1;
-        for krn_fnct in ['linear', 'rbf', 'my_knl']:
-            acc = self.main_function(trn_data, trn_labels, tst_data, tst_labels, C, krn_fnct)
-            print('-------------------------------------------------')
+        acc = self.main_function(trn_data, trn_labels, tst_data, tst_labels, self.C, self.kernel_fcn)
         return acc
 
     def main_function(self, X_train, y_train, X_test, y_test, C, kernel_function):
