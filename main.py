@@ -7,8 +7,6 @@ import numpy as np
 from scipy.io import arff
 
 from preproc.preprocess import Preprocess
-from algorithms.ib1Algorithm import ib1Algorithm
-from algorithms.ib2Algorithm import ib2Algorithm
 from algorithms.auxiliary_methods import *
 from sklearn.preprocessing.label import LabelEncoder
 
@@ -56,7 +54,7 @@ def main():
     trn_tst_dic = trn_tst_idxs(ref_data_dic, dataset)
 
     # --------------------------------------------------------------------------------- Reading parameters from keyboard
-    k, metric, voting_policy = read_keyboard()
+    C, kernel = read_keyboard()
 
     # ------------------------------------------------------------------------------------------------------- Preprocess
     df1 = pd.DataFrame(ref_data)
@@ -67,26 +65,17 @@ def main():
 
     data1 = df1.values  # original data in a numpy array without labels
     load = Preprocess()
-    # data_x = load.preprocess_method(data1, metric)
 
     # ---------------------------------------------------------------------------------------- Encode groundtruth labels
     le = LabelEncoder()
     le.fit(np.unique(groundtruth_labels))
     groundtruth_labels = le.transform(groundtruth_labels)
 
-    boolean_weighting = False # weighting
-    if boolean_weighting:
-        print('A feature selection method has been used (boolean_weighting = True)\n')
-    else:
-        print('No feature selection method has been used (boolean_weighting = False)\n')
-
-    data_x = load.preprocess_method(data1, metric, groundtruth_labels, boolean_weighting)
-
-    accuracies = []
-    fold_number = 0
-
+    data_x = load.preprocess_method(data1)
     # -------------------------------------------------------------------------------------------- Supervised classifier
     # Compute accuracy for each fold
+    accuracies = []
+    fold_number = 0
     start_time = time.time()
     for trn_idxs, tst_idxs in trn_tst_dic.values():
         fold_number = fold_number + 1
@@ -96,7 +85,7 @@ def main():
         tst_data = data_x[tst_idxs]
         tst_labels = groundtruth_labels[tst_idxs]
 
-        knn = ib2Algorithm(k, metric, voting_policy) # knn = ib3Algorithm(k, metric); knn = ib1Algorithm(k, metric)
+        knn = ib2Algorithm(k, metric, voting_policy)
         knn.fit(trn_data, trn_labels)
         knn.classify(tst_data)
 

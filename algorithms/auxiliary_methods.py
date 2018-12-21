@@ -3,31 +3,21 @@ import numpy as np
 
 
 def read_keyboard():
-    print('\n' + '\033[1m' + 'Which K value do you want to use?' + '\033[0m')
-    k = int(input('Insert a number between 1-20: '))
-    print('\n' + '\033[1m' + 'Which distance function do you want to use?' + '\033[0m' + '\n1: Euclidean\n2: Manhattan'
-          '\n3: Canberra\n4: HVDM')
+    print('\n' + '\033[1m' + 'Which C value do you want to use?' + '\033[0m')
+    C = int(input('Insert a number between 1-20: '))
+    print('\n' + '\033[1m' + 'Which kernel function do you want to use?' + '\033[0m' + '\n1: Linear\n2: Radial Basis '
+                                'Function\n3: Plynomial\n4: Custom kernel')
     dist = int(input('Insert a number between 1-4: '))
     if dist == 1:
-        metric = 'euclidean'
+        kernel = 'linear'
     elif dist == 2:
-        metric = 'manhattan'
+        kernel = 'rbf'
     elif dist == 3:
-        metric = 'canberra'
+        kernel = 'poly'
     elif dist == 4:
-        metric = 'hvdm'
-    print('\n' + '\033[1m' + 'Which voting policy do you want to use?' + '\033[0m' + '\n1: Most voted solution\n'
-                '2: Modified Plurality\n3: Borda Count')
-    voting_policy = int(input('Insert a number between 1-3: '))
-    print('')
-    if voting_policy == 1:
-        voting_policy = 'most_voted'
-    elif voting_policy == 2:
-        voting_policy = 'modified_plurality'
-    elif voting_policy == 3:
-        voting_policy = 'borda_count'
+        kernel = 'my_knl'
 
-    return(k, metric, voting_policy)
+    return(C, kernel)
 
 
 def trn_tst_idxs(ref_data_dic, dataset):
