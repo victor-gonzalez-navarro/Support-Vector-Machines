@@ -2,12 +2,11 @@ import os
 import re
 import time
 
-import pandas as pd
-import numpy as np
 from scipy.io import arff
 
 from preproc.preprocess import Preprocess
 from algorithms.auxiliary_methods import *
+from algorithms.SVM_Algorithm import SVM_Algorithm
 from sklearn.preprocessing.label import LabelEncoder
 
 
@@ -85,11 +84,9 @@ def main():
         tst_data = data_x[tst_idxs]
         tst_labels = groundtruth_labels[tst_idxs]
 
-        knn = ib2Algorithm(k, metric, voting_policy)
-        knn.fit(trn_data, trn_labels)
-        knn.classify(tst_data)
-
-        accuracies.append((sum([a == b for a, b in zip(tst_labels, knn.tst_labels)]))/len(tst_labels))
+        svecm = SVM_Algorithm(C, kernel)
+        acc = svecm.algorithm(trn_data, trn_labels, tst_data, tst_labels)
+        accuracies.append(acc)
 
     mean_accuracies = str(round(np.mean(accuracies), 3))
     std_accuracies = str(round(np.std(accuracies), 2))
