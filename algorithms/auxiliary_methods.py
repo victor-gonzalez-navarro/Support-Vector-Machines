@@ -4,10 +4,10 @@ import numpy as np
 
 def read_keyboard():
     print('\n' + '\033[1m' + 'Which C value do you want to use?' + '\033[0m')
-    C = float(input('Insert a number between (C = 1 is a good value): '))
+    C = float(input('Insert a number (ex: C=1): '))
     print('\n' + '\033[1m' + 'Which kernel function do you want to use?' + '\033[0m' + '\n1: Linear\n2: Radial Basis '
-                                'Function\n3: Plynomial\n4: Custom kernel\n4: Sigmoid')
-    dist = int(input('Insert a number between 1-4: '))
+                                'Function\n3: Plynomial\n4: Custom kernel\n5: Sigmoid')
+    dist = int(input('Insert a number between 1-5: '))
     if dist == 1:
         kernel = 'linear'
     elif dist == 2:

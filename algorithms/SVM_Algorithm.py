@@ -20,11 +20,11 @@ class SVM_Algorithm():
         return acc
 
     def main_function(self, X_train, y_train, X_test, y_test, C, kernel_function):
-        # Write here your SVM code and choose a linear kernel
         if kernel_function != 'my_knl':
             svm = SVC(C=C, kernel=kernel_function, decision_function_shape=self.decision_function)
         else:
             svm = SVC(C=C, kernel=self.my_kernel, decision_function_shape=self.decision_function)
+
         svm.fit(X_train, y_train)
         scores = svm.predict(X_test)
         # Print on the console the number of correct predictions and the total of predictions

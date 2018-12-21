@@ -88,8 +88,8 @@ def main():
         acc = svecm.algorithm(trn_data, trn_labels, tst_data, tst_labels)
         accuracies.append(acc)
 
-    mean_accuracies = str(round(np.mean(accuracies), 3))
-    std_accuracies = str(round(np.std(accuracies), 2))
+    mean_accuracies = str(round(np.mean(accuracies), 4))
+    std_accuracies = str(round(np.std(accuracies), 3))
     print('\n\033[1m'+'The mean accuracy of classification in the test set is: ' + mean_accuracies + ' ± ' +
           std_accuracies+'\033[0m')
     print('\033[1mRunning time for the 10 folds: %s seconds\033[0m' % round(time.time() - start_time, 4))
