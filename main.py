@@ -53,7 +53,7 @@ def main():
     trn_tst_dic = trn_tst_idxs(ref_data_dic, dataset)
 
     # --------------------------------------------------------------------------------- Reading parameters from keyboard
-    C, kernel = read_keyboard()
+    C, kernel, decision_function = read_keyboard()
 
     # ------------------------------------------------------------------------------------------------------- Preprocess
     df1 = pd.DataFrame(ref_data)
@@ -84,7 +84,7 @@ def main():
         tst_data = data_x[tst_idxs]
         tst_labels = groundtruth_labels[tst_idxs]
 
-        svecm = SVM_Algorithm(C, kernel)
+        svecm = SVM_Algorithm(C, kernel, decision_function)
         acc = svecm.algorithm(trn_data, trn_labels, tst_data, tst_labels)
         accuracies.append(acc)
 

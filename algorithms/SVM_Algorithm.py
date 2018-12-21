@@ -10,9 +10,10 @@ class SVM_Algorithm():
     tst_labels = None
     dic_feats = {}
 
-    def __init__(self, C=1, kernel='rbf'):
+    def __init__(self, C=1, kernel='rbf', decision_function='ovo'):
         self.C = C
         self.kernel_fcn = kernel
+        self.decision_function = decision_function
 
     def algorithm(self, trn_data, trn_labels, tst_data, tst_labels):
         acc = self.main_function(trn_data, trn_labels, tst_data, tst_labels, self.C, self.kernel_fcn)
@@ -21,9 +22,9 @@ class SVM_Algorithm():
     def main_function(self, X_train, y_train, X_test, y_test, C, kernel_function):
         # Write here your SVM code and choose a linear kernel
         if kernel_function != 'my_knl':
-            svm = SVC(C = C, kernel=kernel_function)
+            svm = SVC(C = C, kernel=kernel_function, decision_function_shape=self.decision_function)
         else:
-            svm = SVC(C=C, kernel=self.my_kernel)
+            svm = SVC(C=C, kernel=self.my_kernel, decision_function_shape=self.decision_function)
         svm.fit(X_train, y_train)
         scores = svm.predict(X_test)
         # Print on the console the number of correct predictions and the total of predictions

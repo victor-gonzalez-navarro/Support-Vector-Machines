@@ -17,8 +17,16 @@ def read_keyboard():
     elif dist == 4:
         kernel = 'my_knl'
 
+    print('\n' + '\033[1m' + 'Which decision function do you want to use?' + '\033[0m' + '\n1: One-vs-rest\n2: '
+                                                                                               'One-vs-one ')
+    dist = int(input('Insert a number between 1-2: '))
+    if dist == 1:
+        decision_function = 'ovr'
+    elif dist == 2:
+        decision_function = 'ovo'
+
     print('')
-    return(C, kernel)
+    return(C, kernel, decision_function)
 
 
 def trn_tst_idxs(ref_data_dic, dataset):
