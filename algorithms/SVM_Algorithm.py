@@ -33,4 +33,4 @@ class SVM_Algorithm():
         return accuracy
 
     def my_kernel(self, X, Y):
-        return np.dot(X**2, Y.T)
+        return ((np.dot(X, Y.T))**4 +(np.dot(X, Y.T))**2)
