@@ -108,7 +108,7 @@ if __name__ == "__main__":
 
         X1, y1, X2, y2 = generate_data_set2()
         dat_number = 2
-        for i in [0.1, 0.5, 1, 5]:
+        for i in [1, 50, 100]:
             C = i
             main_function(X1, y1, X2, y2, C, 'linear', False, dat_number)
             print('-------------------------------------------------')
@@ -119,20 +119,20 @@ if __name__ == "__main__":
             print('-------------------------------------------------')
 
 
-    def run_svm_dataset2_victor():
-
-        ####
-        # Write here your SVM code and choose a linear kernel with the best C parameter
-        # plot the graph with the support_vectors_
-        # print on the console the number of correct predictions and the total of predictions
-        ####
-
-        X1, y1, X2, y2 = generate_data_set2_victor()
-        dat_number = 2
-        for i in [0.1, 1, 10, 500]:
-            C = i
-            main_function(X1, y1, X2, y2, C, 'linear', False, dat_number)
-            print('-------------------------------------------------')
+    # def run_svm_dataset2_victor():
+#
+    #     ####
+    #     # Write here your SVM code and choose a linear kernel with the best C parameter
+    #     # plot the graph with the support_vectors_
+    #     # print on the console the number of correct predictions and the total of predictions
+    #     ####
+#
+    #     X1, y1, X2, y2 = generate_data_set2_victor()
+    #     dat_number = 2
+    #     for i in [1, 50, 100]:
+    #         C = i
+    #         main_function(X1, y1, X2, y2, C, 'linear', False, dat_number)
+    #         print('-------------------------------------------------')
 
 
     def run_svm_dataset3():
