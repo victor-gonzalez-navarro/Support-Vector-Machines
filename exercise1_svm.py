@@ -92,7 +92,7 @@ if __name__ == "__main__":
         X1, y1, X2, y2 = generate_data_set1()
         C = 1
         dat_number = 1
-        for krn_fnct in ['linear', 'rbf', 'my_knl']:
+        for krn_fnct in ['linear', 'rbf', 'poly', 'my_knl', 'sigmoid']:
             main_function(X1, y1, X2, y2, C, krn_fnct, True, dat_number)
             print('-------------------------------------------------')
 
@@ -114,7 +114,7 @@ if __name__ == "__main__":
             print('-------------------------------------------------')
 
         C = 1
-        for krn_fnct in ['linear', 'rbf', 'poly']:
+        for krn_fnct in ['linear', 'rbf', 'poly', 'my_knl', 'sigmoid']:
             main_function(X1, y1, X2, y2, C, krn_fnct, True, dat_number)
             print('-------------------------------------------------')
 
@@ -146,7 +146,7 @@ if __name__ == "__main__":
         X1, y1, X2, y2 = generate_data_set3()
         C = 1
         dat_number = 3
-        for krn_fnct in ['linear', 'rbf', 'poly']:
+        for krn_fnct in ['linear', 'rbf', 'poly', 'my_knl', 'sigmoid']:
             main_function(X1, y1, X2, y2, C, krn_fnct, True, dat_number)
             print('-------------------------------------------------')
 
@@ -248,7 +248,7 @@ if __name__ == "__main__":
 
 
     def my_kernel(X, Y):
-        return (np.dot(X, Y.T))
+        return ((np.dot(X, Y.T)) ** 4 + (np.dot(X, Y.T)) ** 2)
 #############################################################
 #############################################################
 #############################################################
