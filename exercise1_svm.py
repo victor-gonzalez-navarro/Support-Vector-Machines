@@ -96,7 +96,9 @@ if __name__ == "__main__":
         for i in [1, 50, 100]:
             C = i
             for krn_fnct in ['linear', 'rbf', 'poly', 'my_knl', 'sigmoid']:
+                start_time = time.time()
                 main_function(X1, y1, X2, y2, C, krn_fnct, False, dat_number)
+                print('\033[1mRunning time: %s seconds\033[0m' % round(time.time() - start_time, 4))
                 print('-------------------------------------------------')
 
 
@@ -114,7 +116,9 @@ if __name__ == "__main__":
         for i in [1, 50, 100]:
             C = i
             for krn_fnct in ['linear', 'rbf', 'poly', 'my_knl', 'sigmoid']:
+                start_time = time.time()
                 main_function(X1, y1, X2, y2, C, krn_fnct, False, dat_number)
+                print('\033[1mRunning time: %s seconds\033[0m' % round(time.time() - start_time, 4))
                 print('-------------------------------------------------')
 
 
@@ -144,12 +148,13 @@ if __name__ == "__main__":
         ####
 
         X1, y1, X2, y2 = generate_data_set3()
-        C = 1
         dat_number = 3
         for i in [1, 50, 100]:
             C = i
             for krn_fnct in ['linear', 'rbf', 'poly', 'my_knl', 'sigmoid']:
+                start_time = time.time()
                 main_function(X1, y1, X2, y2, C, krn_fnct, False, dat_number)
+                print('\033[1mRunning time: %s seconds\033[0m' % round(time.time() - start_time, 4))
                 print('-------------------------------------------------')
 
 
@@ -256,26 +261,20 @@ if __name__ == "__main__":
 #############################################################
 
 # EXECUTE SVM with THIS DATASETS
-    start_time = time.time()
-    print('\033[1m'+'Daraset 1: Results using a SVM with different kernel functions'+'\033[0m')
+    print('\033[1m' + 'Daraset 1: Results using a SVM with different kernel functions' + '\033[0m')
     run_svm_dataset1()   # data distribution 1
-    print('\033[1mRunning time: %s seconds\033[0m' % round(time.time() - start_time, 4))
-
-
-    start_time = time.time()
+#
+#
     print('\n\033[1m'+'Dataset 2: Results using a SVM with different C values and kernel functions'+'\033[0m')
     run_svm_dataset2()   # data distribution 2
-    print('\033[1mRunning time: %s seconds\033[0m' % round(time.time() - start_time, 4))
-
-
+#
+#
     # print('\n\033[1m'+'Modified dataset 2: Results using a SVM with a linear kernel and the best parameter of
     # C'+'\033['                                                                                          '0m')
     #run_svm_dataset2_victor()   # data distribution 2 (modified)
-
-    start_time = time.time()
+#
     print('\n\033[1m'+'Dataset 3: Results using a SVM with a different kernel functions'+'\033[0m')
     run_svm_dataset3()   # data distribution 3
-    print('\033[1mRunning time: %s seconds\033[0m' % round(time.time() - start_time, 4))
 
 
 #############################################################
