@@ -91,11 +91,11 @@ if __name__ == "__main__":
         ####
 
         X1, y1, X2, y2 = generate_data_set1()
-        C = 1
         dat_number = 1
-        for i in [1, 50, 100]:
-            C = i
-            for krn_fnct in ['linear', 'rbf', 'poly', 'my_knl', 'sigmoid']:
+        # for krn_fnct in ['rbf', 'rbf', 'poly', 'my_knl', 'sigmoid']:
+        for krn_fnct in ['rbf', 'rbf', 'poly', 'sigmoid']:
+            for i in [1, 50, 100]:
+                C = i
                 start_time = time.time()
                 main_function(X1, y1, X2, y2, C, krn_fnct, False, dat_number)
                 print('\033[1mRunning time: %s seconds\033[0m' % round(time.time() - start_time, 4))
@@ -115,7 +115,8 @@ if __name__ == "__main__":
         dat_number = 2
         for i in [1, 50, 100]:
             C = i
-            for krn_fnct in ['linear', 'rbf', 'poly', 'my_knl', 'sigmoid']:
+            #for krn_fnct in ['linear', 'rbf', 'poly', 'my_knl', 'sigmoid']:
+            for krn_fnct in ['rbf', 'rbf', 'poly', 'sigmoid']:
                 start_time = time.time()
                 main_function(X1, y1, X2, y2, C, krn_fnct, False, dat_number)
                 print('\033[1mRunning time: %s seconds\033[0m' % round(time.time() - start_time, 4))
@@ -151,7 +152,8 @@ if __name__ == "__main__":
         dat_number = 3
         for i in [1, 50, 100]:
             C = i
-            for krn_fnct in ['linear', 'rbf', 'poly', 'my_knl', 'sigmoid']:
+            # for krn_fnct in ['linear', 'rbf', 'poly', 'my_knl', 'sigmoid']:
+            for krn_fnct in ['rbf', 'rbf', 'poly', 'sigmoid']:
                 start_time = time.time()
                 main_function(X1, y1, X2, y2, C, krn_fnct, False, dat_number)
                 print('\033[1mRunning time: %s seconds\033[0m' % round(time.time() - start_time, 4))
